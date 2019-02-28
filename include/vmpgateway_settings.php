@@ -58,6 +58,11 @@ function vegnux_define_gateway_class(){
 					'type' => 'textarea',
 					'default' =>  __('Use this method to pay with your credit card securely.', Vegnux_TXTDOM)
 				),
+				'cust_acpage_code' => array(
+					'title' => __('Custom Account Page Code', Vegnux_TXTDOM),
+					'type' => 'text',
+					'default' => __('Put your code or shortcode here', Vegnux_TXTDOM),
+				),
 				'acc_code' => array(
 					'title' => __('AccCode', Vegnux_TXTDOM),
 					'type' => 'text',
