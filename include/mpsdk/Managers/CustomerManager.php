@@ -15,10 +15,16 @@
  * @author Raza
  */
 include_once("BaseManager.php");
-include_once("../Entities/Customer.php");
-include_once("../Entities/CustomerResponse.php");
-include_once("../Entities/CreditCard.php");
-include_once("../Entities/CreditCardResponse.php");
+
+
+
+include_once MWC_ROOT . "/include/mpsdk/Entities/Customer.php";
+
+include_once MWC_ROOT . "/include/mpsdk/Entities/CustomerResponse.php";
+
+include_once MWC_ROOT . "/include/mpsdk/Entities/CreditCard.php";
+
+include_once MWC_ROOT . "/include/mpsdk/Entities/CreditCardResponse.php";
 class CustomerManager extends BaseManager
 {
     public function __construct(MetropagoGateway $metropagoGateway) {        

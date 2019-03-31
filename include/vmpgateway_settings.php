@@ -1,22 +1,13 @@
 <?php
+
 // Elementos del menu de configuracion de la pasarela
+
+add_action('plugins_loaded', 'vegnux_define_gateway_class');
+
 function vegnux_define_gateway_class(){
 
 	class Vegnux_Gateway extends WC_Payment_Gateway{
-
-		protected $cc_type;
-		protected $cc_num;
-		protected $cc_holder;
-		protected $cc_exp_m;
-		protected $cc_exp_y;
-		protected $cc_cvv;
-
-		protected $auth_expires;
-		protected $adjust_delay;
-
-		protected $log_errors;
-		protected $log_errors_file;
-		
+	
 		function __construct(){
 
 			$this->auth_expires = 20;
@@ -30,9 +21,16 @@ function vegnux_define_gateway_class(){
 			$this->has_fields = true;
 			$this->method_title = __('VegnuX Metropago Gateway', Vegnux_TXTDOM );
 			$this->method_description = __('Direct payments with VegnuX Metropago Gateway. User will be asked to enter credit card details on the checkout page.', Vegnux_TXTDOM);
-
+			
+			 //Initialize form methods
 			$this->init_form_fields();
 			$this->init_settings();
+			
+			 // Define user set variables.
+            $this->acc_code = $this->settings['acc_code'];
+            $this->merchant_id = $this->settings['merchant_id'];
+            $this->terminal_id = $this->settings['terminal_id'];
+            $this->enviroment = $this->settings['enviroment'];
 
 			$this->title = $this->get_option('title');
 
@@ -58,11 +56,6 @@ function vegnux_define_gateway_class(){
 					'type' => 'textarea',
 					'default' =>  __('Use this method to pay with your credit card securely.', Vegnux_TXTDOM)
 				),
-				'cust_acpage_code' => array(
-					'title' => __('Custom Account Page Code', Vegnux_TXTDOM),
-					'type' => 'text',
-					'default' => __('Put your code or shortcode here', Vegnux_TXTDOM),
-				),
 				'acc_code' => array(
 					'title' => __('AccCode', Vegnux_TXTDOM),
 					'type' => 'text',
@@ -71,36 +64,32 @@ function vegnux_define_gateway_class(){
 				'merchant_id' => array(
 					'title' => __('Merchant', Vegnux_TXTDOM),
 					'type' => 'text',
-					'default' => 'DEMO0001',
+					'default' => '100177',
 				),
 				'terminal_id' => array(
 					'title' => __('Terminal', Vegnux_TXTDOM),
 					'type' => 'text',
-					'default' => 'DEMO0001',
+					'default' => '100177001',
 				),
-				'transtype' => array(
-					'title' => __('Transaction type', Vegnux_TXTDOM),
+				'enviroment' => array(
+					'title' => __('Enviroment', Vegnux_TXTDOM),
 					'type' => 'select',
-					'default' => 'sale',
+					'default' => 'SANDBOX',
 					'options' => array(
-						'sale' => __('Sale', Vegnux_TXTDOM),
-						'preauth' => __('PreAuthorization', Vegnux_TXTDOM)
+						'SANDBOX' => __('Sandbox', Vegnux_TXTDOM),
+						'PRODUCTION' => __('Production', Vegnux_TXTDOM)
 						)
-				),
-				'sandbox' => array(
-					'title' => __('Sandbox mode', Vegnux_TXTDOM),
-					'type' => 'checkbox',
-					'label' => __('Enable', Vegnux_TXTDOM),
-					'default' => 'no'
 				)
 			);
+			
+
 		}
 		
 // Aqui continuamos
-		
+
 	}
 }
-add_action('plugins_loaded', 'vegnux_define_gateway_class');
+
 
 function vegnux_declare_gateway_class($methods){
 	$methods[] = 'Vegnux_Gateway';
