@@ -19,8 +19,8 @@ function vegnux_define_gateway_class(){
 			$this->id = 'vegnux_gateway';
 			$this->icon = Vegnux_INDEX . 'src/ccards_logos.png';
 			$this->has_fields = true;
-			$this->method_title = __('VegnuX Metropago Gateway', Vegnux_TXTDOM );
-			$this->method_description = __('Direct payments with VegnuX Metropago Gateway. User will be asked to enter credit card details on the checkout page.', Vegnux_TXTDOM);
+			$this->method_title = __('VegnuX Metropago Gateway', 'Vegnux_TXTDOM' );
+			$this->method_description = __('Direct payments with VegnuX Metropago Gateway. User will be asked to enter credit card details on the checkout page.', 'Vegnux_TXTDOM');
 			
 			 //Initialize form methods
 			$this->init_form_fields();
@@ -40,44 +40,44 @@ function vegnux_define_gateway_class(){
 		function init_form_fields(){
 			$this->form_fields = array(
 				'enabled' => array(
-					'title' => __('Enable Matropago', Vegnux_TXTDOM),
+					'title' => __('Enable Matropago', 'Vegnux_TXTDOM'),
 					'type' => 'checkbox',
-					'label' => __('Enable', Vegnux_TXTDOM),
+					'label' => __('Enable', 'Vegnux_TXTDOM'),
 					'default' => 'yes'
 				),
 				'title' => array(
-					'title' => __('Method name', Vegnux_TXTDOM),
+					'title' => __('Method name', 'Vegnux_TXTDOM'),
 					'type' => 'text',
-					'default' => __('VegnuX Metropago Gateway', Vegnux_TXTDOM),
+					'default' => __('VegnuX Metropago Gateway', 'Vegnux_TXTDOM'),
 					'desc_tip' => true
 				),
 				'description' => array(
-					'title' => __('Method description', Vegnux_TXTDOM),
+					'title' => __('Method description', 'Vegnux_TXTDOM'),
 					'type' => 'textarea',
-					'default' =>  __('Use this method to pay with your credit card securely.', Vegnux_TXTDOM)
+					'default' =>  __('Use this method to pay with your credit card securely.', 'Vegnux_TXTDOM')
 				),
 				'acc_code' => array(
-					'title' => __('AccCode', Vegnux_TXTDOM),
+					'title' => __('AccCode', 'Vegnux_TXTDOM'),
 					'type' => 'text',
 					'default' => '123123',
 				),
 				'merchant_id' => array(
-					'title' => __('Merchant', Vegnux_TXTDOM),
+					'title' => __('Merchant', 'Vegnux_TXTDOM'),
 					'type' => 'text',
 					'default' => '100177',
 				),
 				'terminal_id' => array(
-					'title' => __('Terminal', Vegnux_TXTDOM),
+					'title' => __('Terminal', 'Vegnux_TXTDOM'),
 					'type' => 'text',
 					'default' => '100177001',
 				),
 				'enviroment' => array(
-					'title' => __('Enviroment', Vegnux_TXTDOM),
+					'title' => __('Enviroment', 'Vegnux_TXTDOM'),
 					'type' => 'select',
 					'default' => 'SANDBOX',
 					'options' => array(
-						'SANDBOX' => __('Sandbox', Vegnux_TXTDOM),
-						'PRODUCTION' => __('Production', Vegnux_TXTDOM)
+						'SANDBOX' => __('Sandbox', 'Vegnux_TXTDOM'),
+						'PRODUCTION' => __('Production', 'Vegnux_TXTDOM')
 						)
 				)
 			);

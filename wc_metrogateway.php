@@ -20,7 +20,7 @@ define('MWC_TXTDOM', 'wc_metrogateway');
 
 add_action('plugins_loaded', 'mwc_load_textdomain');
 function mwc_load_textdomain(){
-	load_plugin_textdomain(VegnuX_TXTDOM, false, plugin_basename(dirname(__FILE__)) . '/langs');
+	load_plugin_textdomain('VegnuX_TXTDOM', false, plugin_basename(dirname(__FILE__)) . '/langs');
 }
 
 // configs del lado de Woocomerce
@@ -28,6 +28,3 @@ require_once MWC_ROOT . '/include/vmpgateway_settings.php';
 // configs del lado del Usuario
 require_once MWC_ROOT . '/include/vmpgateway_user_wc_tab.php';
 
-
-
-?>

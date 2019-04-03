@@ -51,7 +51,7 @@ add_filter( 'query_vars', 'vegnux_payment_settings_query_vars', 0 );
 // 3. Insert the new endpoint into the My Account menu
  
 function vegnux_add_payment_settings_link_my_account( $items ) {
-    $items['payment-settings'] = __('Wallet', Vegnux_TXTDOM );
+    $items['payment-settings'] = __('Wallet', 'Vegnux_TXTDOM' );
     return $items;
 }
  
@@ -62,7 +62,7 @@ add_filter( 'woocommerce_account_menu_items', 'vegnux_add_payment_settings_link_
 // 4. Add content to the new endpoint
  
 function vegnux_payment_settings_content() {
-echo __('<h3>Credit Card Settings</h3>', Vegnux_TXTDOM );
+echo __('<h3>Credit Card Settings</h3>', 'Vegnux_TXTDOM' );
 
 echo '<form method="post">
 		<input name="idCustomer" class="form-control form-control-lg" type="text" placeholder="Documento de identificacion">
@@ -71,11 +71,11 @@ echo '<form method="post">
 
 // llamamos las variables de usuario de wordpress
 	  global $current_user;
-      get_currentuserinfo();
+      wp_get_current_user();
 
 /* guardamos customer y documento de identidad como variables*/
-$usercustomerid = get_user_meta( $current_user->ID, vmpuser_cusID , true);
-$useruniqueid = get_user_meta( $current_user->ID, vmpuser_perID , true);
+$usercustomerid = get_user_meta( $current_user->ID, 'vmpuser_cusID' , true);
+$useruniqueid = get_user_meta( $current_user->ID, 'vmpuser_perID' , true);
 
       echo '<h2>Customer guardado: ' . $usercustomerid . ' :P</h2>' ;
       echo '<h2>Documento de identidad guardado: ' . $useruniqueid . ' :P</h2>';
