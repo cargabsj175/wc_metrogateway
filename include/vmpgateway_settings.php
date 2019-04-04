@@ -1,6 +1,6 @@
 <?php
-
-// Elementos del menu de configuracion de la pasarela
+// vmpgateway_settings.php: Establece los valores de Metropago
+// Elementos del menu de configuracion de la pasarela en Woocommerce
 
 add_action('plugins_loaded', 'vegnux_define_gateway_class');
 
@@ -17,7 +17,7 @@ function vegnux_define_gateway_class(){
 			$this->log_errors_file = dirname(__FILE__) . '/failed_transactions';
 
 			$this->id = 'vegnux_gateway';
-			$this->icon = Vegnux_INDEX . 'src/ccards_logos.png';
+			$this->icon = 'Vegnux_INDEX' . 'src/ccards_logos.png';
 			$this->has_fields = true;
 			$this->method_title = __('VegnuX Metropago Gateway', 'Vegnux_TXTDOM' );
 			$this->method_description = __('Direct payments with VegnuX Metropago Gateway. User will be asked to enter credit card details on the checkout page.', 'Vegnux_TXTDOM');

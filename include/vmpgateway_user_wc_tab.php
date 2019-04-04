@@ -20,15 +20,6 @@ include_once MWC_ROOT . "/include/mpsdk/Entities/CustomerSearch.php";
 include_once MWC_ROOT . "/include/mpsdk/Entities/CustomerSearchOption.php";
 include_once MWC_ROOT . "/include/mpsdk/Entities/Instruction.php";
 
-
-//librerias BOOTSTRAP
-
-echo '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">';
-echo '<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>';
-
-
 function vegnux_add_payment_settings_endpoint() {
     add_rewrite_endpoint( 'payment-settings', EP_ROOT | EP_PAGES );
 }
@@ -64,11 +55,6 @@ add_filter( 'woocommerce_account_menu_items', 'vegnux_add_payment_settings_link_
 function vegnux_payment_settings_content() {
 echo __('<h3>Credit Card Settings</h3>', 'Vegnux_TXTDOM' );
 
-echo '<form method="post">
-		<input name="idCustomer" class="form-control form-control-lg" type="text" placeholder="Documento de identificacion">
-		<button type="submit" class="btn btn-secondary" style="margin:10px 5px;">Crear Customer</button>
-	  </form>';
-
 // llamamos las variables de usuario de wordpress
 	  global $current_user;
       wp_get_current_user();
@@ -77,9 +63,6 @@ echo '<form method="post">
 $usercustomerid = get_user_meta( $current_user->ID, 'vmpuser_cusID' , true);
 $useruniqueid = get_user_meta( $current_user->ID, 'vmpuser_perID' , true);
 
-      echo '<h2>Customer guardado: ' . $usercustomerid . ' :P</h2>' ;
-      echo '<h2>Documento de identidad guardado: ' . $useruniqueid . ' :P</h2>';
-      
 /* Obtenemos valores del gateway mediante el gateway id */
 $payment_gateway_id = 'vegnux_gateway';
 /* Obtenemos instancia del objeto WC_Payment_Gateways */
@@ -87,7 +70,16 @@ $payment_gateways = WC_Payment_Gateways::instance();
 /* Obtenemos el objeto WC_Payment_Gateway deseado */
 $payment_gateway = $payment_gateways->payment_gateways()[$payment_gateway_id];
 
-	  if( isset($_POST['idCustomer'])){
+/****VALIDAR QUE NO ESTE EN BD EL CUSTOMERID CREADO**/
+
+if( $usercustomerid == '' ){
+
+	 echo '<form method="post">
+		<input name="idCustomer" class="form-control form-control-lg" type="text" placeholder="Documento de identificacion">
+		<button type="submit" class="btn btn-secondary" style="margin:10px 5px;">Crear Customer</button>
+	  </form>';
+
+	if( isset($_POST['idCustomer'])){
 
 	  		/*=========== INSTANCIACION DE METROPAGO ===============*/
 			$sdk = new MetropagoGateway("$payment_gateway->enviroment","$payment_gateway->merchant_id","$payment_gateway->terminal_id","","");
@@ -104,8 +96,8 @@ $payment_gateway = $payment_gateways->payment_gateways()[$payment_gateway_id];
 		    /* Guardamos el idCustomer y UniqueIdentifier del usuario en */
 		    $valor1 = $customerResult->CustomerId;
 		    $valor2 = $_POST['idCustomer'];
-		    update_user_meta( $current_user->ID, vmpuser_cusID , $valor1 );
-		    update_user_meta( $current_user->ID, vmpuser_perID , $valor2 );
+		    update_user_meta( $current_user->ID, 'vmpuser_cusID' , $valor1 );
+		    update_user_meta( $current_user->ID, 'vmpuser_perID' , $valor2 );
 		    
 			/*echo '<pre>';
 			print_r($customerResult);
@@ -114,9 +106,9 @@ $payment_gateway = $payment_gateways->payment_gateways()[$payment_gateway_id];
 		
 	  }
 
-	  //**** add card**//
+}else{
 
-	  echo '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin:20px 10px;">
+	echo '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin:20px 10px;">
 			 	 Agregar Tarjeta
 			</button>
 
@@ -141,8 +133,7 @@ $payment_gateway = $payment_gateways->payment_gateways()[$payment_gateway_id];
 			  </div>
 			</div>';
 
-
-		if( isset($_POST['cardName'])){
+	  if( isset($_POST['cardName'])){
 
 			/*=========== INSTANCIACION DE METROPAGO ===============*/
 			$sdk = new MetropagoGateway("$payment_gateway->enviroment","$payment_gateway->merchant_id","$payment_gateway->terminal_id","","");
@@ -177,7 +168,6 @@ $payment_gateway = $payment_gateways->payment_gateways()[$payment_gateway_id];
 			$card->Address =$Address;
 			$customer->CreditCards[]=$card;
 
-
 			$customerSavedWithCardResult = $CustManager->UpdateCustomer($customer);
 			/*
 			echo '-----------<pre>';
@@ -185,9 +175,6 @@ $payment_gateway = $payment_gateways->payment_gateways()[$payment_gateway_id];
 			echo '-----------</pre>';
 			*/
 		}
-
-
-		//search cards
 
 
 			/*=========== INSTANCIACION DE METROPAGO ===============*/
@@ -210,7 +197,6 @@ $payment_gateway = $payment_gateways->payment_gateways()[$payment_gateway_id];
 			//print_r($response_customers[0]->CreditCards);
 			//echo '*******************</pre>';
 
-
 			foreach ($response_customers[0]->CreditCards as $card ) {
 				if( $card->CardType == 'Visa'){
 					$logo = 'https://agar.com.pa/wp-content/uploads/2017/11/logo-large_visa.png';
@@ -228,10 +214,12 @@ $payment_gateway = $payment_gateways->payment_gateways()[$payment_gateway_id];
 						</div>
 					 </div>';
 			}
+}
 
+	  //**** add card**//
 
+		//search cards
 
-		
 // echo do_shortcode( ' /* tu shortcode aqui */ ' );
 }
 
