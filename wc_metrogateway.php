@@ -8,15 +8,15 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 Plugin Name: VegnuX Metropago Gateway
 Plugin URI: https://github.com/cargabsj175/wc_metrogateway
 Description: Pagos con tarjeta de crédito con metropago
-Version: 0.3.1
+Version: 0.3.5
 Author: Carlos Sanchez, Sergio Galvis
 Author URI: https://elsimpicuitico.wordpress.com
 License: GPL3
 */
 
 define('MWC_ROOT', dirname(__FILE__));
-define('MWC_INDEX', plugin_dir_url(__FILE__));
-define('MWC_TXTDOM', 'wc_metrogateway');
+define('VegnuX_INDEX', plugin_dir_url(__FILE__));
+define('VegnuX_TXTDOM', 'wc_metrogateway');
 
 add_action('plugins_loaded', 'mwc_load_textdomain');
 function mwc_load_textdomain(){
@@ -27,4 +27,3 @@ function mwc_load_textdomain(){
 require_once MWC_ROOT . '/include/vmpgateway_settings.php';
 // configs del lado del Usuario
 require_once MWC_ROOT . '/include/vmpgateway_user_wc_tab.php';
-

@@ -93,7 +93,7 @@ if( $usercustomerid == '' ){
 			$customer->LastName = $current_user->user_lastname;
 			$customerResult = $CustManager->AddCustomer($customer);
 
-		    /* Guardamos el idCustomer y UniqueIdentifier del usuario en */
+		    /* Guardamos el idCustomer y UniqueIdentifier del usuario en bd */
 		    $valor1 = $customerResult->CustomerId;
 		    $valor2 = $_POST['idCustomer'];
 		    update_user_meta( $current_user->ID, 'vmpuser_cusID' , $valor1 );
@@ -199,9 +199,9 @@ if( $usercustomerid == '' ){
 
 			foreach ($response_customers[0]->CreditCards as $card ) {
 				if( $card->CardType == 'Visa'){
-					$logo = 'https://agar.com.pa/wp-content/uploads/2017/11/logo-large_visa.png';
+					$logo = plugins_url( '../src/visa.png', __FILE__ );
 				}else{
-					$logo = 'https://agar.com.pa/wp-content/uploads/2018/11/master.png'; 
+					$logo = plugins_url( '../src/mastercard.png', __FILE__ ); 
 				}
 
 				echo '<div class="row" style="padding:15px; border-bottom:1px solid #E5E5E5">
