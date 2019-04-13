@@ -1,4 +1,4 @@
- <?php
+<?php
 
 /**
  * TransactionManager short summary.
@@ -14,9 +14,9 @@
  * @author Raza
   */
  include_once("BaseManager.php");
- include_once("../Entities/Transaction.php");
- include_once("../Entities/TransactionOptions.php");
- include_once("../Entities/TransactionResponse.php");
+ include_once MWC_ROOT . "/include/mpsdk/Entities/Transaction.php";
+ include_once MWC_ROOT . "/include/mpsdk/Entities/TransactionOptions.php";
+ include_once MWC_ROOT . "/include/mpsdk/Entities/TransactionResponse.php";
  class TransactionManager extends BaseManager
 {
     public function __construct(MetropagoGateway $metropagoGateway) {        

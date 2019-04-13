@@ -1,22 +1,19 @@
 <?php
-// vmpgateway_settings.php: Configuraciones en Ajustes -> Pagos
-// Elementos del menu de configuracion de la pasarela en Woocommerce
+
+// Elementos del menu de configuracion de la pasarela
 
 // Llamamos al SDK de Metropago
 include_once MWC_ROOT . "/include/mpsdk/Configuration/MetropagoGateway.php";
-
+include_once MWC_ROOT . "/include/mpsdk/Managers/TransactionManager.php";
 include_once MWC_ROOT . "/include/mpsdk/Managers/CustomerManager.php";
 
 include_once MWC_ROOT . "/include/mpsdk/Entities/Customer.php";
-include_once MWC_ROOT . "/include/mpsdk/Entities/Address.php";
+
+include_once MWC_ROOT . "/include/mpsdk/Entities/Transaction.php";
+include_once MWC_ROOT . "/include/mpsdk/Entities/TransactionOptions.php";
 include_once MWC_ROOT . "/include/mpsdk/Entities/CreditCard.php";
 include_once MWC_ROOT . "/include/mpsdk/Entities/CustomerSearch.php";
-include_once MWC_ROOT . "/include/mpsdk/Entities/ParameterFilter.php";
-include_once MWC_ROOT . "/include/mpsdk/Entities/CustomerEntity.php";
-include_once MWC_ROOT . "/include/mpsdk/Entities/Instruction.php";
-include_once MWC_ROOT . "/include/mpsdk/Entities/CustomerSearch.php";
 include_once MWC_ROOT . "/include/mpsdk/Entities/CustomerSearchOption.php";
-include_once MWC_ROOT . "/include/mpsdk/Entities/Instruction.php";
 
 add_action('plugins_loaded', 'vegnux_define_gateway_class');
 
@@ -102,9 +99,7 @@ function vegnux_define_gateway_class(){
 		}
 		
 /* inicio de los campos y procesos de pagos */
-
-
-function payment_fields() {
+public function payment_fields() {
     
 // llamamos las variables de usuario de wordpress
 	  global $current_user;
@@ -121,7 +116,7 @@ $payment_gateway = $payment_gateways->payment_gateways()[$payment_gateway_id];
     
 echo __('<h3>Choose a Card</h3>', 'Vegnux_TXTDOM' );
 
-	/*=========== INSTANCIACION DE METROPAGO ===============*/
+/*=========== INSTANCIACION DE METROPAGO ===============*/
 			$sdk = new MetropagoGateway("$payment_gateway->enviroment","$payment_gateway->merchant_id","$payment_gateway->terminal_id","","");
 			$CustManager  = new CustomerManager($sdk);
 
@@ -136,6 +131,7 @@ echo __('<h3>Choose a Card</h3>', 'Vegnux_TXTDOM' );
 
 			$response_customers = $CustManager->SearchCustomer($customerFilters);
 
+// Creamos una lista de TDC elejibles por el usuario
 
 			foreach ($response_customers[0]->CreditCards as $card ) {
 				if( $card->CardType == 'Visa'){
@@ -144,76 +140,96 @@ echo __('<h3>Choose a Card</h3>', 'Vegnux_TXTDOM' );
 					$logo = plugins_url( '../src/mastercard.png', __FILE__ );
 				}
 
-				echo '<div class="row" style="padding:15px; border-bottom:1px solid #E5E5E5">
-						<div class="col-md-3">
-							<img src="'.$logo.'" style="width:60px;">
-							
-						</div>
-						<div class="col-md-9">
-							'.$card->Number.'
-						</div>
-					 </div>';
+				echo '
+					<input name="MyCreditCards" type="radio" value="'.$card->Token.'|'.$card->ExpirationDate.'" > <img src="'.$logo.'" style="height:60px;" alt="'.$card->CardType.'"> '.$card->Number.' </br>
+			    ';
 			}
+}
 
+function validate_fields(){
+ 
+	if( empty( $_POST[ 'MyCreditCards' ]) ) {
+	    wc_add_notice(__(sprintf ('you must select a credit card!'), 'Vegnux_TXTDOM'), 'error');
+		return false;
+	}
+	return true;
 }
  
 function process_payment( $order_id ) {
- 
-	global $woocommerce;
- 
-	// necesitamos esto para obtener cualquier detalle de la orden
-	$order = wc_get_order( $order_id );
- 
-	/*
- 	 * Arreglo con los parametros del SDK
-	 */
-	 
-	//$args = array(
- 
-	$payment = APPROVED;
- 
-	//);
- 
-	/*
-	 * Construimos la interaccion del SDK con wp_remote_post()
- 	 */
-	 $response = wp_remote_post( '{payment processor endpoint}', $args );
- 
- 
-	 if( !is_wp_error( $response ) ) {
- 
-		 $body = json_decode( $response['body'], true );
-        // esto puede ser diferente dependiendo del procesador de pago
-		 if ( $body['response']['responseCode'] == 'APPROVED' ) {
- 
-			// recibimos el pago
+    // Llamamos a Woocommerce
+    global $woocommerce;
+    
+    $order = new WC_Order($order_id);
+    
+    // Si MyCreditCards existe extraemos el token y fecha de vencimiento
+    if( isset($_POST['MyCreditCards'])){
+        $cardresult = $_POST['MyCreditCards'];
+        $cardresult_explode = explode('|', $cardresult);
+        $CardToken = $cardresult_explode[0];
+        $CardExpDate = $cardresult_explode[1];
+    }
+    
+    // llamamos las variables de usuario de wordpress
+	global $current_user;
+    wp_get_current_user();
+    
+    /* Obtenemos customerid de la BD de user Wordpress*/
+    $usercustomerid = get_user_meta( $current_user->ID, 'vmpuser_cusID' , true);
+      
+    /* Obtenemos valores del gateway mediante el gateway id */
+      $payment_gateway_id = 'vegnux_gateway';
+    /* Obtenemos instancia del objeto WC_Payment_Gateways */
+      $payment_gateways = WC_Payment_Gateways::instance();
+    /* Obtenemos el objeto WC_Payment_Gateway deseado */
+      $payment_gateway = $payment_gateways->payment_gateways()[$payment_gateway_id];
+      
+    // Obtenemos el costo total de la orden
+    $TotalAmount=$woocommerce->cart->total;
+
+    // Instaciamos al SDK
+    $Gateway = new  MetropagoGateway("$payment_gateway->enviroment","$payment_gateway->merchant_id","$payment_gateway->terminal_id","","");
+    $CustManager  = new CustomerManager($Gateway);
+    $TrxManager  = new TransactionManager($Gateway);
+    
+    // Procesando la compra
+    $transRequest = new Transaction();
+    $transRequest->CustomerData = new Customer();
+    $transRequest->CustomerData->CustomerId = $usercustomerid; // de user meta
+    $transRequest->CustomerData->CreditCards = array();
+    $card = new CreditCard();
+    $card->ExpirationDate = $CardExpDate; // del form radio
+    $card->Token= $CardToken; // del form radio
+    $transRequest->CustomerData->CreditCards[] = $card;
+    $transRequest->Amount = $TotalAmount; // de woocommerce
+    $transRequest->OrderTrackingNumber= $order_id; //el mismo de Woocommerce
+    
+    $sale_response = $TrxManager->Sale($transRequest);
+    
+    if($sale_response->ResponseDetails->IsSuccess === true) {
+    
+            // woocommerce recibe el pago
 			$order->payment_complete();
 			$order->reduce_order_stock();
  
-			// Notas al cliente (customer) (reemplace true con false para hacerlo privado)
-			$order->add_order_note( 'Hola, su orden ha sido pagada. Muchas Gracias', true );
+			// Algunas notas personalizadas para el cliente
+			$order->add_order_note(__(sprintf ('Hey, your order is paid! Thank you!'), 'Vegnux_TXTDOM'), true);
  
-			// Vaciar el carrito
+			// Se vacia el carrito
 			$woocommerce->cart->empty_cart();
  
-			// Redireccionar a la pagina de Gracias por su compra
+			// Redirecciona a la pagina de Pedido recibido
+
 			return array(
 				'result' => 'success',
 				'redirect' => $this->get_return_url( $order )
 			);
- 
-		 } else {
-			wc_add_notice(  'Intente de nuevo.', 'error' );
-			return;
-		}
- 
-	} else {
-		wc_add_notice(  'Error de conexi&oacute;n.', 'error' );
-		return;
-	}
- 
-}
 
+    } else {
+    	wc_add_notice(__(sprintf ('Payment error: could not complete the payment. Please try again later or contact our support.'), 'Vegnux_TXTDOM'), 'error');
+				return;
+	    }
+
+}
 
 /* fin de los campos y procesos de pagos */
 
