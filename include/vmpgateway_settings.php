@@ -149,7 +149,7 @@ echo __('<h3>Choose a Card</h3>', 'Vegnux_TXTDOM' );
 function validate_fields(){
  
 	if( empty( $_POST[ 'MyCreditCards' ]) ) {
-	    wc_add_notice(__(sprintf ('you must select a credit card!'), 'Vegnux_TXTDOM'), 'error');
+	    wc_add_notice(sprintf(__('you must select a credit card!'), 'Vegnux_TXTDOM'), 'error');
 		return false;
 	}
 	return true;
@@ -212,7 +212,7 @@ function process_payment( $order_id ) {
 			$order->reduce_order_stock();
  
 			// Algunas notas personalizadas para el cliente
-			$order->add_order_note(__(sprintf ('Hey, your order is paid! Thank you!'), 'Vegnux_TXTDOM'), true);
+			$order->add_order_note(sprintf(__('Hey, your order is paid! Thank you!'), 'Vegnux_TXTDOM'), true);
  
 			// Se vacia el carrito
 			$woocommerce->cart->empty_cart();
@@ -225,7 +225,7 @@ function process_payment( $order_id ) {
 			);
 
     } else {
-    	wc_add_notice(__(sprintf ('Payment error: could not complete the payment. Please try again later or contact our support.'), 'Vegnux_TXTDOM'), 'error');
+    	wc_add_notice(sprintf(__('Payment error: could not complete the payment. Please try again later or contact our support.'), 'Vegnux_TXTDOM'), 'error');
 				return;
 	    }
 
