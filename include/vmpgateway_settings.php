@@ -1,5 +1,5 @@
 <?php
-
+// vmpgateway_settings.php:
 // Elementos del menu de configuracion de la pasarela
 
 // Llamamos al SDK de Metropago
@@ -40,7 +40,6 @@ function vegnux_define_gateway_class(){
 			$this->init_settings();
 			
 			 // Define user set variables.
-            $this->acc_code = $this->settings['acc_code'];
             $this->merchant_id = $this->settings['merchant_id'];
             $this->terminal_id = $this->settings['terminal_id'];
             $this->enviroment = $this->settings['enviroment'];
@@ -68,11 +67,6 @@ function vegnux_define_gateway_class(){
 					'title' => __('Method description', 'Vegnux_TXTDOM'),
 					'type' => 'textarea',
 					'default' =>  __('Use this method to pay with your credit card securely.', 'Vegnux_TXTDOM')
-				),
-				'acc_code' => array(
-					'title' => __('AccCode', 'Vegnux_TXTDOM'),
-					'type' => 'text',
-					'default' => '123123',
 				),
 				'merchant_id' => array(
 					'title' => __('Merchant', 'Vegnux_TXTDOM'),

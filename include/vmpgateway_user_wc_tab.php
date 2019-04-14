@@ -1,5 +1,5 @@
 <?php
-// vmpgateway_user_wc_tab.php: Crea una pestaña en perfil de usuario
+// vmpgateway_user_wc_tab.php: Crea pestaña de la wallet en perfil de usuario
 // Muestra las configuraciones de tarjeta de crédito para cada cliente
 
 // Nota: Actualizar Permalinks o tendra error 404
@@ -98,12 +98,6 @@ if( $usercustomerid == '' ){
 		    $valor2 = $_POST['idCustomer'];
 		    update_user_meta( $current_user->ID, 'vmpuser_cusID' , $valor1 );
 		    update_user_meta( $current_user->ID, 'vmpuser_perID' , $valor2 );
-		    
-			/*echo '<pre>';
-			print_r($customerResult);
-			echo '</pre>';
-			echo '<h1>'.$customerResult->CustomerId.'</h1>';*/
-		
 	  }
 
 }else{
@@ -169,11 +163,6 @@ if( $usercustomerid == '' ){
 			$customer->CreditCards[]=$card;
 
 			$customerSavedWithCardResult = $CustManager->UpdateCustomer($customer);
-			/*
-			echo '-----------<pre>';
-			print_r($customerSavedWithCardResult);
-			echo '-----------</pre>';
-			*/
 		}
 
 
@@ -191,11 +180,6 @@ if( $usercustomerid == '' ){
 			$customerFilters->SearchOption=$customerSearchOptions;
 
 			$response_customers = $CustManager->SearchCustomer($customerFilters);
-
-
-			//echo '*******************<pre>';
-			//print_r($response_customers[0]->CreditCards);
-			//echo '*******************</pre>';
 
 			foreach ($response_customers[0]->CreditCards as $card ) {
 				if( $card->CardType == 'Visa'){
@@ -215,12 +199,6 @@ if( $usercustomerid == '' ){
 					 </div>';
 			}
 }
-
-	  //**** add card**//
-
-		//search cards
-
-// echo do_shortcode( ' /* tu shortcode aqui */ ' );
 }
 
 add_action( 'woocommerce_account_payment-settings_endpoint', 'vegnux_payment_settings_content' );
