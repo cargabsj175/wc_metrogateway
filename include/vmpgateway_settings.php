@@ -84,7 +84,7 @@ function vegnux_define_gateway_class(){
 					'default' => 'SANDBOX',
 					'options' => array(
 						'SANDBOX' => __('Sandbox', 'wc_metrogateway'),
-						'PRODUCTION' => __('Production', 'wc_metrogateway')
+						'PRODUCTION' => __('Production', 'wc_metrogateway'),
 						)
 				)
 			);
