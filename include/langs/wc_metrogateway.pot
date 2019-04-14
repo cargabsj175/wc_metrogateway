@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VegnuX Metropago Gateway\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-14 06:44+0000\n"
-"PO-Revision-Date: 2019-04-14 02:53+ZONE\n"
-"Last-Translator: cargabsj175 <cargabsj175@gmail.com>\n"
+"POT-Creation-Date: 2019-04-14 16:12+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
 "Language: \n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
@@ -20,17 +20,42 @@ msgid "<h3>Choose a Card</h3>"
 msgstr ""
 
 #: include/vmpgateway_user_wc_tab.php:56
-msgid "<h3>Credit Card Settings</h3>"
+msgid "<h3>Credit Cards Settings</h3>"
+msgstr ""
+
+#: include/vmpgateway_user_wc_tab.php:109
+#: include/vmpgateway_user_wc_tab.php:123
+msgid "Add Card"
+msgstr ""
+
+#: include/vmpgateway_user_wc_tab.php:119
+msgid "Card Number"
+msgstr ""
+
+#: include/vmpgateway_user_wc_tab.php:118
+msgid "Cardholder name"
 msgstr ""
 
 #. Author of the plugin
 msgid "Carlos Sanchez, Sergio Galvis"
 msgstr ""
 
+#: include/vmpgateway_user_wc_tab.php:124
+msgid "Close"
+msgstr ""
+
+#: include/vmpgateway_user_wc_tab.php:82
+msgid "Create Wallet"
+msgstr ""
+
 #: include/vmpgateway_settings.php:36
 msgid ""
 "Direct payments with VegnuX Metropago Gateway. User will be asked to enter "
 "credit card details on the checkout page."
+msgstr ""
+
+#: include/vmpgateway_user_wc_tab.php:81
+msgid "Document id"
 msgstr ""
 
 #: include/vmpgateway_settings.php:57
@@ -45,12 +70,31 @@ msgstr ""
 msgid "Enviroment"
 msgstr ""
 
+#: include/vmpgateway_user_wc_tab.php:120
+msgid "Expire Month"
+msgstr ""
+
+#: include/vmpgateway_user_wc_tab.php:121
+msgid "Expire Year"
+msgstr ""
+
+#: include/vmpgateway_settings.php:211
+msgid "Hey, your order is paid! Thank you!"
+msgstr ""
+
 #. Author URI of the plugin
 msgid "https://elsimpicuitico.wordpress.com"
 msgstr ""
 
 #. URI of the plugin
 msgid "https://github.com/cargabsj175/wc_metrogateway"
+msgstr ""
+
+#: include/vmpgateway_user_wc_tab.php:78
+msgid ""
+"It&#39;s the first time that you enter this module, please enter a unique "
+"identification number before adding credit cards.  &#40;Example&#58; "
+"passport, driver&#39;s license or another valid document&#41;"
 msgstr ""
 
 #: include/vmpgateway_settings.php:72
@@ -63,6 +107,12 @@ msgstr ""
 
 #: include/vmpgateway_settings.php:61
 msgid "Method name"
+msgstr ""
+
+#: include/vmpgateway_settings.php:224
+msgid ""
+"Payment error: could not complete the payment. Please try again later or "
+"contact our support."
 msgstr ""
 
 #. Description of the plugin
@@ -92,4 +142,8 @@ msgstr ""
 
 #: include/vmpgateway_snippets.php:14 include/vmpgateway_user_wc_tab.php:45
 msgid "Wallet"
+msgstr ""
+
+#: include/vmpgateway_settings.php:146
+msgid "You must select a credit card!"
 msgstr ""

@@ -143,7 +143,9 @@ echo __('<h3>Choose a Card</h3>', 'wc_metrogateway' );
 function validate_fields(){
  
 	if( empty( $_POST[ 'MyCreditCards' ]) ) {
-	    wc_add_notice(sprintf(__('you must select a credit card!'), 'wc_metrogateway'), 'error');
+	    wc_add_notice(__('You must select a credit card!', 'wc_metrogateway'), 'error');
+	    
+	    
 		return false;
 	}
 	return true;
@@ -206,8 +208,8 @@ function process_payment( $order_id ) {
 			$order->reduce_order_stock();
  
 			// Algunas notas personalizadas para el cliente
-			$order->add_order_note(sprintf(__('Hey, your order is paid! Thank you!'), 'wc_metrogateway'), true);
- 
+			$order->add_order_note(__('Hey, your order is paid! Thank you!', 'wc_metrogateway'), true);
+			
 			// Se vacia el carrito
 			$woocommerce->cart->empty_cart();
  
@@ -219,7 +221,7 @@ function process_payment( $order_id ) {
 			);
 
     } else {
-    	wc_add_notice(sprintf(__('Payment error: could not complete the payment. Please try again later or contact our support.'), 'wc_metrogateway'), 'error');
+    	wc_add_notice(__('Payment error: could not complete the payment. Please try again later or contact our support.', 'wc_metrogateway'), 'error');
 				return;
 	    }
 

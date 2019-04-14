@@ -53,7 +53,7 @@ add_filter( 'woocommerce_account_menu_items', 'vegnux_add_payment_settings_link_
 // 4. Add content to the new endpoint
  
 function vegnux_payment_settings_content() {
-echo __('<h3>Credit Card Settings</h3>', 'wc_metrogateway' );
+echo __('<h3>Credit Cards Settings</h3>', 'wc_metrogateway' );
 
 // llamamos las variables de usuario de wordpress
 	  global $current_user;
@@ -73,10 +73,13 @@ $payment_gateway = $payment_gateways->payment_gateways()[$payment_gateway_id];
 /****VALIDAR QUE NO ESTE EN BD EL CUSTOMERID CREADO**/
 
 if( $usercustomerid == '' ){
-
+    
+     echo '<br>';
+     echo __( 'It&#39;s the first time that you enter this module, please enter a unique identification number before adding credit cards.  &#40;Example&#58; passport, driver&#39;s license or another valid document&#41;', 'wc_metrogateway' );
+     echo '<br><br>';
 	 echo '<form method="post">
-		<input name="idCustomer" class="form-control form-control-lg" type="text" placeholder="Documento de identificacion">
-		<button type="submit" class="btn btn-secondary" style="margin:10px 5px;">Crear Customer</button>
+		<input name="idCustomer" class="form-control form-control-lg" type="text" placeholder="' .__('Document id', 'wc_metrogateway') . '">
+		<button type="submit" class="btn btn-secondary" style="margin:10px 5px;">' .__('Create Wallet', 'wc_metrogateway'). '</button>
 	  </form>';
 
 	if( isset($_POST['idCustomer'])){
@@ -103,7 +106,7 @@ if( $usercustomerid == '' ){
 }else{
 
 	echo '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin:20px 10px;">
-			 	 Agregar Tarjeta
+			 	 ' .__('Add Card', 'wc_metrogateway'). '
 			</button>
 
 			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -112,13 +115,13 @@ if( $usercustomerid == '' ){
 			      
 			      <div class="modal-body">
 			        <form method="post">
-						<input name="cardName" class="form-control form-control-lg" type="text"  placeholder="Nombre de Tarjeta" value="'.$current_user->user_firstname.' '.$current_user->user_lastname.'" required><br>
-						<input name="cardNumber" class="form-control form-control-lg" type="text"  placeholder="Número de Tarjeta" required><br>
-						<input name="cardMonth" class="form-control form-control-lg" type="text"  placeholder="Mes de Vencimiento" required><br>
-						<input name="cardYear" class="form-control form-control-lg" type="text"  placeholder="Año de Vencimiento" required><br>
+						<input name="cardName" class="form-control form-control-lg" type="text"  placeholder="' .__('Cardholder name', 'wc_metrogateway'). '" value="'.$current_user->user_firstname.' '.$current_user->user_lastname.'" required><br>
+						<input name="cardNumber" class="form-control form-control-lg" type="text"  placeholder="' .__('Card Number', 'wc_metrogateway'). '" required><br>
+						<input name="cardMonth" class="form-control form-control-lg" type="text"  placeholder="' .__('Expire Month', 'wc_metrogateway'). '" required><br>
+						<input name="cardYear" class="form-control form-control-lg" type="text"  placeholder="' .__('Expire Year', 'wc_metrogateway'). '" required><br>
 						<input name="cardCvv" class="form-control form-control-lg" type="text"  placeholder="CVV" required><br>
-						<button class="btn btn-primary" type="submit">Agregar Tarjeta</button>
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button class="btn btn-primary" type="submit">' .__('Add Card', 'wc_metrogateway'). '</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">' .__('Close', 'wc_metrogateway'). '</button>
 					  </form>
 
 			      </div>
