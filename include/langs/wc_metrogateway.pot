@@ -1,0 +1,95 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: VegnuX Metropago Gateway\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-14 06:44+0000\n"
+"PO-Revision-Date: 2019-04-14 02:53+ZONE\n"
+"Last-Translator: cargabsj175 <cargabsj175@gmail.com>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.2.2; wp-5.1.1"
+
+#: include/vmpgateway_settings.php:111
+msgid "<h3>Choose a Card</h3>"
+msgstr ""
+
+#: include/vmpgateway_user_wc_tab.php:56
+msgid "<h3>Credit Card Settings</h3>"
+msgstr ""
+
+#. Author of the plugin
+msgid "Carlos Sanchez, Sergio Galvis"
+msgstr ""
+
+#: include/vmpgateway_settings.php:36
+msgid ""
+"Direct payments with VegnuX Metropago Gateway. User will be asked to enter "
+"credit card details on the checkout page."
+msgstr ""
+
+#: include/vmpgateway_settings.php:57
+msgid "Enable"
+msgstr ""
+
+#: include/vmpgateway_settings.php:55
+msgid "Enable Matropago"
+msgstr ""
+
+#: include/vmpgateway_settings.php:82
+msgid "Enviroment"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://elsimpicuitico.wordpress.com"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://github.com/cargabsj175/wc_metrogateway"
+msgstr ""
+
+#: include/vmpgateway_settings.php:72
+msgid "Merchant"
+msgstr ""
+
+#: include/vmpgateway_settings.php:67
+msgid "Method description"
+msgstr ""
+
+#: include/vmpgateway_settings.php:61
+msgid "Method name"
+msgstr ""
+
+#. Description of the plugin
+msgid "Payments using metropago gateway."
+msgstr ""
+
+#: include/vmpgateway_settings.php:87
+msgid "Production"
+msgstr ""
+
+#: include/vmpgateway_settings.php:86
+msgid "Sandbox"
+msgstr ""
+
+#: include/vmpgateway_settings.php:77
+msgid "Terminal"
+msgstr ""
+
+#: include/vmpgateway_settings.php:69
+msgid "Use this method to pay with your credit card securely."
+msgstr ""
+
+#. Name of the plugin
+#: include/vmpgateway_settings.php:35 include/vmpgateway_settings.php:63
+msgid "VegnuX Metropago Gateway"
+msgstr ""
+
+#: include/vmpgateway_snippets.php:14 include/vmpgateway_user_wc_tab.php:45
+msgid "Wallet"
+msgstr ""

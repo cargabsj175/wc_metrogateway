@@ -32,8 +32,8 @@ function vegnux_define_gateway_class(){
 			$this->id = 'vegnux_gateway';
 			$this->icon = plugins_url( '../src/ccards_logos.png', __FILE__ );
 			$this->has_fields = true;
-			$this->method_title = __('VegnuX Metropago Gateway', 'Vegnux_TXTDOM' );
-			$this->method_description = __('Direct payments with VegnuX Metropago Gateway. User will be asked to enter credit card details on the checkout page.', 'Vegnux_TXTDOM');
+			$this->method_title = __('VegnuX Metropago Gateway', 'wc_metrogateway' );
+			$this->method_description = __('Direct payments with VegnuX Metropago Gateway. User will be asked to enter credit card details on the checkout page.', 'wc_metrogateway');
 			
 			 //Initialize form methods
 			$this->init_form_fields();
@@ -52,39 +52,39 @@ function vegnux_define_gateway_class(){
 		function init_form_fields(){
 			$this->form_fields = array(
 				'enabled' => array(
-					'title' => __('Enable Matropago', 'Vegnux_TXTDOM'),
+					'title' => __('Enable Matropago', 'wc_metrogateway'),
 					'type' => 'checkbox',
-					'label' => __('Enable', 'Vegnux_TXTDOM'),
+					'label' => __('Enable', 'wc_metrogateway'),
 					'default' => 'yes'
 				),
 				'title' => array(
-					'title' => __('Method name', 'Vegnux_TXTDOM'),
+					'title' => __('Method name', 'wc_metrogateway'),
 					'type' => 'text',
-					'default' => __('VegnuX Metropago Gateway', 'Vegnux_TXTDOM'),
+					'default' => __('VegnuX Metropago Gateway', 'wc_metrogateway'),
 					'desc_tip' => true
 				),
 				'description' => array(
-					'title' => __('Method description', 'Vegnux_TXTDOM'),
+					'title' => __('Method description', 'wc_metrogateway'),
 					'type' => 'textarea',
-					'default' =>  __('Use this method to pay with your credit card securely.', 'Vegnux_TXTDOM')
+					'default' =>  __('Use this method to pay with your credit card securely.', 'wc_metrogateway')
 				),
 				'merchant_id' => array(
-					'title' => __('Merchant', 'Vegnux_TXTDOM'),
+					'title' => __('Merchant', 'wc_metrogateway'),
 					'type' => 'text',
 					'default' => '100177',
 				),
 				'terminal_id' => array(
-					'title' => __('Terminal', 'Vegnux_TXTDOM'),
+					'title' => __('Terminal', 'wc_metrogateway'),
 					'type' => 'text',
 					'default' => '100177001',
 				),
 				'enviroment' => array(
-					'title' => __('Enviroment', 'Vegnux_TXTDOM'),
+					'title' => __('Enviroment', 'wc_metrogateway'),
 					'type' => 'select',
 					'default' => 'SANDBOX',
 					'options' => array(
-						'SANDBOX' => __('Sandbox', 'Vegnux_TXTDOM'),
-						'PRODUCTION' => __('Production', 'Vegnux_TXTDOM')
+						'SANDBOX' => __('Sandbox', 'wc_metrogateway'),
+						'PRODUCTION' => __('Production', 'wc_metrogateway')
 						)
 				)
 			);
@@ -108,7 +108,7 @@ $payment_gateways = WC_Payment_Gateways::instance();
 /* Obtenemos el objeto WC_Payment_Gateway deseado */
 $payment_gateway = $payment_gateways->payment_gateways()[$payment_gateway_id];
     
-echo __('<h3>Choose a Card</h3>', 'Vegnux_TXTDOM' );
+echo __('<h3>Choose a Card</h3>', 'wc_metrogateway' );
 
 /*=========== INSTANCIACION DE METROPAGO ===============*/
 			$sdk = new MetropagoGateway("$payment_gateway->enviroment","$payment_gateway->merchant_id","$payment_gateway->terminal_id","","");
@@ -143,7 +143,7 @@ echo __('<h3>Choose a Card</h3>', 'Vegnux_TXTDOM' );
 function validate_fields(){
  
 	if( empty( $_POST[ 'MyCreditCards' ]) ) {
-	    wc_add_notice(sprintf(__('you must select a credit card!'), 'Vegnux_TXTDOM'), 'error');
+	    wc_add_notice(sprintf(__('you must select a credit card!'), 'wc_metrogateway'), 'error');
 		return false;
 	}
 	return true;
@@ -206,7 +206,7 @@ function process_payment( $order_id ) {
 			$order->reduce_order_stock();
  
 			// Algunas notas personalizadas para el cliente
-			$order->add_order_note(sprintf(__('Hey, your order is paid! Thank you!'), 'Vegnux_TXTDOM'), true);
+			$order->add_order_note(sprintf(__('Hey, your order is paid! Thank you!'), 'wc_metrogateway'), true);
  
 			// Se vacia el carrito
 			$woocommerce->cart->empty_cart();
@@ -219,7 +219,7 @@ function process_payment( $order_id ) {
 			);
 
     } else {
-    	wc_add_notice(sprintf(__('Payment error: could not complete the payment. Please try again later or contact our support.'), 'Vegnux_TXTDOM'), 'error');
+    	wc_add_notice(sprintf(__('Payment error: could not complete the payment. Please try again later or contact our support.'), 'wc_metrogateway'), 'error');
 				return;
 	    }
 

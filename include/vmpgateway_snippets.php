@@ -11,7 +11,7 @@
 function wpb_woo_my_account_order() {
 	$myorder = array(
 		'dashboard'          => __( 'Dashboard', 'woocommerce' ),
-		'payment-settings' => __( 'Wallet', 'VegnuX_TXTDOM' ),
+		'payment-settings' => __( 'Wallet', 'wc_metrogateway' ),
 		'orders'             => __( 'Orders', 'woocommerce' ),
 		'edit-address'       => __( 'Addresses', 'woocommerce' ),
 		'edit-account'       => __( 'Account details', 'woocommerce' ),

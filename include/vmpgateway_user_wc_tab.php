@@ -42,7 +42,7 @@ add_filter( 'query_vars', 'vegnux_payment_settings_query_vars', 0 );
 // 3. Insert the new endpoint into the My Account menu
  
 function vegnux_add_payment_settings_link_my_account( $items ) {
-    $items['payment-settings'] = __('Wallet', 'Vegnux_TXTDOM' );
+    $items['payment-settings'] = __('Wallet', 'wc_metrogateway' );
     return $items;
 }
  
@@ -53,7 +53,7 @@ add_filter( 'woocommerce_account_menu_items', 'vegnux_add_payment_settings_link_
 // 4. Add content to the new endpoint
  
 function vegnux_payment_settings_content() {
-echo __('<h3>Credit Card Settings</h3>', 'Vegnux_TXTDOM' );
+echo __('<h3>Credit Card Settings</h3>', 'wc_metrogateway' );
 
 // llamamos las variables de usuario de wordpress
 	  global $current_user;
@@ -199,6 +199,7 @@ if( $usercustomerid == '' ){
 					 </div>';
 			}
 }
+
 }
 
 add_action( 'woocommerce_account_payment-settings_endpoint', 'vegnux_payment_settings_content' );
