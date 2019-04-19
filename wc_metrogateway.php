@@ -7,7 +7,7 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 Plugin Name: VegnuX Metropago Gateway
 Plugin URI: https://github.com/cargabsj175/wc_metrogateway
 Description: Payments using metropago gateway.
-Version: 0.6
+Version: 0.7
 Author: Carlos Sanchez, Sergio Galvis
 Author URI: https://elsimpicuitico.wordpress.com
 Text Domain: wc_metrogateway

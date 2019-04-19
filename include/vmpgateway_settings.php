@@ -96,9 +96,9 @@ public function payment_fields() {
 // llamamos las variables de usuario de wordpress
 	  global $current_user;
       wp_get_current_user();
-      
+
 // Comprobando si ha iniciado sesion
-if ( is_user_logged_in() ) { 
+if ( is_user_logged_in() ) {
 
 /* guardamos customer y documento de identidad como variables*/
 $usercustomerid = get_user_meta( $current_user->ID, 'vmpuser_cusID' , true);
@@ -109,8 +109,6 @@ $payment_gateway_id = 'vegnux_gateway';
 $payment_gateways = WC_Payment_Gateways::instance();
 /* Obtenemos el objeto WC_Payment_Gateway deseado */
 $payment_gateway = $payment_gateways->payment_gateways()[$payment_gateway_id];
-    
-echo "<h3>".__('Choose a Card', 'wc_metrogateway' )."</h3>";
 
 /*=========== INSTANCIACION DE METROPAGO ===============*/
 			$sdk = new MetropagoGateway("$payment_gateway->enviroment","$payment_gateway->merchant_id","$payment_gateway->terminal_id","","");
@@ -123,6 +121,11 @@ echo "<h3>".__('Choose a Card', 'wc_metrogateway' )."</h3>";
 			$customerSearchOptions->IncludeShippingAddress=true;
 			$customerFilters->SearchOption=$customerSearchOptions;
 			$response_customers = $CustManager->SearchCustomer($customerFilters);
+			
+// Comprobando si intenta pagar sin registrar su ID y/o tarjeta de credito
+if( $useruniqueid != '' ){
+    
+echo "<h3>".__('Choose a Card', 'wc_metrogateway' )."</h3>";
 
 // Creamos una lista de TDC elejibles por el usuario
 			foreach ($response_customers[0]->CreditCards as $card ) {
@@ -137,14 +140,19 @@ echo "<h3>".__('Choose a Card', 'wc_metrogateway' )."</h3>";
 			    ';
 			}
 
-    
+} // fin de la primera condicion para $useruniqueid
+else {
+    echo "<h4>".__('Not document ID or credit cards has been registered yet.','wc_metrogateway')."</h4>";
+    echo "<strong><a href='".get_permalink( wc_get_page_id( 'myaccount' ) )."&payment-settings'>".__('Go to Wallet','wc_metrogateway')."</a></strong>";
+} // fin de la segunda condicion para $useruniqueid
+
 } // fin de la primera condicion para is_user_logged_in
 else { 
     //Mensaje para quien no ha iniciado sesion e intenta pagar
     echo "<h4>".__('You are not sign in. Please, login before use and/or registering your credit cards.','wc_metrogateway')."</h4>";
     echo "<strong><a href='".get_permalink( wc_get_page_id( 'myaccount' ) )."&payment-settings'>".__('Login','wc_metrogateway')."</a></strong>";
 } // fin de la segunda condicion para is_user_logged_in
-			
+		
 }
 
 function validate_fields(){
