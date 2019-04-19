@@ -88,8 +88,6 @@ function vegnux_define_gateway_class(){
 						)
 				)
 			);
-			
-
 		}
 		
 /* inicio de los campos y procesos de pagos */
@@ -98,6 +96,10 @@ public function payment_fields() {
 // llamamos las variables de usuario de wordpress
 	  global $current_user;
       wp_get_current_user();
+      
+// Comprobando si ha iniciado sesion
+if ( is_user_logged_in() ) { 
+
 /* guardamos customer y documento de identidad como variables*/
 $usercustomerid = get_user_meta( $current_user->ID, 'vmpuser_cusID' , true);
 $useruniqueid = get_user_meta( $current_user->ID, 'vmpuser_perID' , true);
@@ -108,25 +110,21 @@ $payment_gateways = WC_Payment_Gateways::instance();
 /* Obtenemos el objeto WC_Payment_Gateway deseado */
 $payment_gateway = $payment_gateways->payment_gateways()[$payment_gateway_id];
     
-echo __('<h3>Choose a Card</h3>', 'wc_metrogateway' );
+echo "<h3>".__('Choose a Card', 'wc_metrogateway' )."</h3>";
 
 /*=========== INSTANCIACION DE METROPAGO ===============*/
 			$sdk = new MetropagoGateway("$payment_gateway->enviroment","$payment_gateway->merchant_id","$payment_gateway->terminal_id","","");
 			$CustManager  = new CustomerManager($sdk);
-
 			$customerFilters =new CustomerSearch();
 			$customerFilters->CustomerId = $usercustomerid;
 			$customerFilters->UniqueIdentifier= $useruniqueid;
-
 			$customerSearchOptions = new CustomerSearchOption();
 			$customerSearchOptions->IncludeCardInstruments=true;
 			$customerSearchOptions->IncludeShippingAddress=true;
 			$customerFilters->SearchOption=$customerSearchOptions;
-
 			$response_customers = $CustManager->SearchCustomer($customerFilters);
 
 // Creamos una lista de TDC elejibles por el usuario
-
 			foreach ($response_customers[0]->CreditCards as $card ) {
 				if( $card->CardType == 'Visa'){
 					$logo = plugins_url( '../src/visa.png', __FILE__ );
@@ -138,6 +136,14 @@ echo __('<h3>Choose a Card</h3>', 'wc_metrogateway' );
 					<input name="MyCreditCards" type="radio" value="'.$card->Token.'|'.$card->ExpirationDate.'" > <img src="'.$logo.'" style="height:60px;" alt="'.$card->CardType.'"> '.$card->Number.' </br>
 			    ';
 			}
+
+    
+} // fin de la primera condicion para is_user_logged_in
+else { 
+    //Mensaje para quien no ha iniciado sesion e intenta pagar
+    echo "<h4>".__('You are not sign in. Please, login before use and/or registering your credit cards.','wc_metrogateway')."</h4>";
+    echo "<strong><a href='".get_permalink( wc_get_page_id( 'myaccount' ) )."&payment-settings'>".__('Login','wc_metrogateway')."</a></strong>";
+} // fin de la segunda condicion para is_user_logged_in
 			
 }
 
@@ -145,8 +151,6 @@ function validate_fields(){
  
 	if( empty( $_POST[ 'MyCreditCards' ]) ) {
 	    wc_add_notice(__('You must select a credit card!', 'wc_metrogateway'), 'error');
-	    
-	    
 		return false;
 	}
 	return true;
@@ -158,7 +162,7 @@ function process_payment( $order_id ) {
     
     $order = new WC_Order($order_id);
     
-    // Si MyCreditCards existe extraemos el token y fecha de vencimiento
+    // Si MyCreditCards contiene datos extraemos el token y fecha de vencimiento
     if( isset($_POST['MyCreditCards'])){
         $cardresult = $_POST['MyCreditCards'];
         $cardresult_explode = explode('|', $cardresult);
@@ -207,9 +211,7 @@ function process_payment( $order_id ) {
     $transRequest->CustomerData->CreditCards[] = $card;
     $transRequest->Amount = $TotalAmount; // de woocommerce
     $transRequest->OrderTrackingNumber= $order_id; //el mismo de Woocommerce
-    
     $sale_response = $TrxManager->Sale($transRequest);
-    
     if($sale_response->ResponseDetails->IsSuccess === true) {
     
             // woocommerce recibe el pago
@@ -240,7 +242,6 @@ function process_payment( $order_id ) {
 
 	}
 }
-
 
 function vegnux_declare_gateway_class($methods){
 	$methods[] = 'Vegnux_Gateway';
