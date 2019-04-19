@@ -138,6 +138,7 @@ echo __('<h3>Choose a Card</h3>', 'wc_metrogateway' );
 					<input name="MyCreditCards" type="radio" value="'.$card->Token.'|'.$card->ExpirationDate.'" > <img src="'.$logo.'" style="height:60px;" alt="'.$card->CardType.'"> '.$card->Number.' </br>
 			    ';
 			}
+			
 }
 
 function validate_fields(){
@@ -180,7 +181,15 @@ function process_payment( $order_id ) {
       $payment_gateway = $payment_gateways->payment_gateways()[$payment_gateway_id];
       
     // Obtenemos el costo total de la orden
-    $TotalAmount=$woocommerce->cart->total;
+    $TotalAmount= $woocommerce->cart->total;
+    
+    if($TotalAmount != 0){
+        // Total segun carrito de compras
+        $TotalAmount = $TotalAmount;
+    }else{
+        // Total segun la orden
+        $TotalAmount = $order->get_total();
+    }
 
     // Instaciamos al SDK
     $Gateway = new  MetropagoGateway("$payment_gateway->enviroment","$payment_gateway->merchant_id","$payment_gateway->terminal_id","","");
