@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VegnuX Metropago Gateway\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-19 20:32+0000\n"
+"POT-Creation-Date: 2019-04-27 12:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -15,24 +15,24 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.2.2; wp-5.1.1"
 
-#: include/vmpgateway_user_wc_tab.php:107
-#: include/vmpgateway_user_wc_tab.php:150
+#: include/vmpgateway_user_wc_tab.php:113
+#: include/vmpgateway_user_wc_tab.php:156
 msgid "Add Card"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:125
+#: include/vmpgateway_user_wc_tab.php:131
 msgid "April"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:129
+#: include/vmpgateway_user_wc_tab.php:135
 msgid "August"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:118
+#: include/vmpgateway_user_wc_tab.php:124
 msgid "Card Number"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:116
+#: include/vmpgateway_user_wc_tab.php:122
 msgid "Cardholder name"
 msgstr ""
 
@@ -44,7 +44,7 @@ msgstr ""
 msgid "Choose a Card"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:152
+#: include/vmpgateway_user_wc_tab.php:158
 msgid "Close"
 msgstr ""
 
@@ -56,7 +56,7 @@ msgstr ""
 msgid "Credit Cards Settings"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:133
+#: include/vmpgateway_user_wc_tab.php:139
 msgid "December"
 msgstr ""
 
@@ -82,15 +82,19 @@ msgstr ""
 msgid "Enviroment"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:123
+#: include/vmpgateway_user_wc_tab.php:129
 msgid "February"
 msgstr ""
 
-#: include/vmpgateway_settings.php:146
+#: include/vmpgateway_settings.php:267
+msgid "Gateway Message: "
+msgstr ""
+
+#: include/vmpgateway_settings.php:158
 msgid "Go to Wallet"
 msgstr ""
 
-#: include/vmpgateway_settings.php:230
+#: include/vmpgateway_settings.php:253
 msgid "Hey, your order is paid! Thank you!"
 msgstr ""
 
@@ -102,6 +106,14 @@ msgstr ""
 msgid "https://github.com/cargabsj175/wc_metrogateway"
 msgstr ""
 
+#: include/vmpgateway_user_wc_tab.php:86
+msgid "I already entered my id, where is my wallet&#63; Click to reload"
+msgstr ""
+
+#: include/vmpgateway_settings.php:253
+msgid "ID: "
+msgstr ""
+
 #: include/vmpgateway_user_wc_tab.php:78
 msgid ""
 "It&#39;s the first time that you enter this module, please enter a unique "
@@ -109,27 +121,27 @@ msgid ""
 "passport, driver&#39;s license or another valid document&#41;"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:122
+#: include/vmpgateway_user_wc_tab.php:128
 msgid "January"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:128
+#: include/vmpgateway_user_wc_tab.php:134
 msgid "July"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:127
+#: include/vmpgateway_user_wc_tab.php:133
 msgid "June"
 msgstr ""
 
-#: include/vmpgateway_settings.php:153
+#: include/vmpgateway_settings.php:165
 msgid "Login"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:124
+#: include/vmpgateway_user_wc_tab.php:130
 msgid "March"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:126
+#: include/vmpgateway_user_wc_tab.php:132
 msgid "May"
 msgstr ""
 
@@ -145,23 +157,23 @@ msgstr ""
 msgid "Method name"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:121
+#: include/vmpgateway_user_wc_tab.php:127
 msgid "Month"
 msgstr ""
 
-#: include/vmpgateway_settings.php:145
+#: include/vmpgateway_settings.php:157
 msgid "Not document ID or credit cards has been registered yet."
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:132
+#: include/vmpgateway_user_wc_tab.php:138
 msgid "November"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:131
+#: include/vmpgateway_user_wc_tab.php:137
 msgid "October"
 msgstr ""
 
-#: include/vmpgateway_settings.php:243
+#: include/vmpgateway_settings.php:266
 msgid ""
 "Payment error: could not complete the payment. Please try again later or "
 "contact our support."
@@ -175,16 +187,28 @@ msgstr ""
 msgid "Production"
 msgstr ""
 
+#: include/vmpgateway_user_wc_tab.php:88
+msgid "Reload"
+msgstr ""
+
+#: include/vmpgateway_settings.php:253
+msgid "Response: "
+msgstr ""
+
 #: include/vmpgateway_settings.php:86
 msgid "Sandbox"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:130
+#: include/vmpgateway_user_wc_tab.php:136
 msgid "September"
 msgstr ""
 
 #: include/vmpgateway_settings.php:77
 msgid "Terminal"
+msgstr ""
+
+#: include/vmpgateway_settings.php:253
+msgid "Trasaction Details: "
 msgstr ""
 
 #: include/vmpgateway_settings.php:69
@@ -200,16 +224,20 @@ msgstr ""
 msgid "Wallet"
 msgstr ""
 
-#: include/vmpgateway_user_wc_tab.php:138
+#: include/vmpgateway_user_wc_tab.php:144
 msgid "Year"
 msgstr ""
 
-#: include/vmpgateway_settings.php:152
+#: include/vmpgateway_settings.php:164
 msgid ""
 "You are not sign in. Please, login before use and/or registering your credit "
 "cards."
 msgstr ""
 
-#: include/vmpgateway_settings.php:161
+#: include/vmpgateway_settings.php:177
+msgid "You must enter a CVV!"
+msgstr ""
+
+#: include/vmpgateway_settings.php:173
 msgid "You must select a credit card!"
 msgstr ""
