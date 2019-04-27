@@ -77,10 +77,16 @@ if( $usercustomerid == '' ){
      echo '<br>';
      echo __( 'It&#39;s the first time that you enter this module, please enter a unique identification number before adding credit cards.  &#40;Example&#58; passport, driver&#39;s license or another valid document&#41;', 'wc_metrogateway' );
      echo '<br><br>';
-	 echo '<form onsubmit="setTimeout(function () { window.location.reload(); }, 5)" method="post">
-		<input name="idCustomer" class="form-control form-control-lg" type="text" placeholder="' .__('Document id', 'wc_metrogateway') . '">
+	 echo '<form method="post">
+		<input name="idCustomer" class="form-control form-control-lg" type="text" pattern="[a-zA-Z0-9_-]{8,15}" placeholder="' .__('Document id', 'wc_metrogateway') . '">
 		<button type="submit" class="btn btn-secondary" style="margin:10px 5px;">' .__('Create Wallet', 'wc_metrogateway'). '</button>
 	  </form>';
+	  
+	echo '<hr>'
+         .__('I already entered my id, where is my wallet&#63; Click to reload','wc_metrogateway').'<br>
+         
+        <input type="button" class="btn btn-secondary" style="margin:10px 5px;" value="'.__('Reload','wc_metrogateway').'" onClick="window.location.href=window.location.href">';
+        
 
 	if( isset($_POST['idCustomer'])){
 
@@ -224,10 +230,8 @@ if( $usercustomerid == '' ){
 							<img src="'.$logo.'" style="width:60px;">
 							
 						</div>
-						<div class="col-md-9">
-							'.$card->Number.'
-						</div>
-					 </div>';
+						    <div class="col-md-9">'.$card->Number.'</div>
+					    </div>';
 			}
 }
 

@@ -136,10 +136,22 @@ echo "<h3>".__('Choose a Card', 'wc_metrogateway' )."</h3>";
 				}
 
 				echo '
-					<input name="MyCreditCards" type="radio" value="'.$card->Token.'|'.$card->ExpirationDate.'" > <img src="'.$logo.'" style="height:60px;" alt="'.$card->CardType.'"> '.$card->Number.' </br>
+				    <div class="row" style="padding:15px; border-bottom:1px solid #E5E5E5">
+					    <div class="col-md-4">
+					        <input name="MyCreditCards" type="radio" value="'.$card->Token.'|'.$card->ExpirationDate.'" >&nbsp;<strong>'.$card->Number.'</strong>&nbsp;
+					            <img src="'.$logo.'" style="height:60px;" alt="'.$card->CardType.'">
+					    </div>
+					</div>
 			    ';
 			}
-
+	            echo '
+	                <div class="row" style="padding:15px;" border-bottom:1px solid #E5E5E5"">
+                    <div class="col-md-4">
+                    <input name="UserCvv" type="text" pattern="\d+" autocomplete="off" maxlength="3" placeholder="CVV" required>
+                    </div>
+                    </div>
+                    ';
+        
 } // fin de la primera condicion para $useruniqueid
 else {
     echo "<h4>".__('Not document ID or credit cards has been registered yet.','wc_metrogateway')."</h4>";
@@ -161,7 +173,12 @@ function validate_fields(){
 	    wc_add_notice(__('You must select a credit card!', 'wc_metrogateway'), 'error');
 		return false;
 	}
+	if( empty( $_POST[ 'UserCvv' ]) ) {
+	    wc_add_notice(__('You must enter a CVV!', 'wc_metrogateway'), 'error');
+		return false;
+	}
 	return true;
+	
 }
  
 function process_payment( $order_id ) {
@@ -176,6 +193,11 @@ function process_payment( $order_id ) {
         $cardresult_explode = explode('|', $cardresult);
         $CardToken = $cardresult_explode[0];
         $CardExpDate = $cardresult_explode[1];
+    }
+    
+    // Comprobamos que el usuario proporcione CVV
+    if( isset($_POST['UserCvv'])){
+        $UserCvv = $_POST['UserCvv'];
     }
     
     // llamamos las variables de usuario de wordpress
@@ -216,6 +238,7 @@ function process_payment( $order_id ) {
     $card = new CreditCard();
     $card->ExpirationDate = $CardExpDate; // del form radio
     $card->Token= $CardToken; // del form radio
+    $card->CVV = $UserCvv; // proporcionado por el cliente
     $transRequest->CustomerData->CreditCards[] = $card;
     $transRequest->Amount = $TotalAmount; // de woocommerce
     $transRequest->OrderTrackingNumber= $order_id; //el mismo de Woocommerce
@@ -227,7 +250,7 @@ function process_payment( $order_id ) {
 			$order->reduce_order_stock();
  
 			// Algunas notas personalizadas para el cliente
-			$order->add_order_note(__('Hey, your order is paid! Thank you!', 'wc_metrogateway'), true);
+			$order->add_order_note(__('Hey, your order is paid! Thank you!', 'wc_metrogateway').'<br><h3>'.__('Trasaction Details: ', 'wc_metrogateway').'</h3><br>'.__('Response: ', 'wc_metrogateway') .$sale_response->ResponseDetails->ResponseSummary.'<br>'.__('ID: ', 'wc_metrogateway').'<strong>'.$sale_response->ResponseDetails->TransactionId.'</strong>', true);
 			
 			// Se vacia el carrito
 			$woocommerce->cart->empty_cart();
@@ -241,6 +264,8 @@ function process_payment( $order_id ) {
 
     } else {
     	wc_add_notice(__('Payment error: could not complete the payment. Please try again later or contact our support.', 'wc_metrogateway'), 'error');
+    	wc_add_notice(__('Gateway Message: ', 'wc_metrogateway') .$sale_response->ResponseDetails->ResponseSummary, 'error');
+    	
 				return;
 	    }
 
